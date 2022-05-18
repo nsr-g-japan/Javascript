@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<style>
+  .form-control.success input{
+    border-color: green
+  }
+   .form-control.error input{
+    border-color: red
+  }
+   .form-control small{
+    color: red
+    position: absolute;
+    visibility: hidden;
+  }
+  .form-control.error small{
+    visibility: visible;
+  }
+  .botton{
+  background-color: #3498db
+  }
+</style>
+
+<div class="container">
+
+
+<form id="form">
+    <div class="form-control">
+   User Name: <input type="text" id="username" placeholder="Enter the Name"><br>
+        <small>Error message</small>
+</div>
+    <div class="form-control">
+   Host Name <input type="text" id="hostadd"  placeholder="Enter the Host"><br>
+               <small>Error message</small>
+</div>
+    <input type="submit" class="botton">
+
+
+</form>
+</div>
+<script>
+    const form=document.getElementById('form')
+    const username=document.getElementById('username')
+    const hostname=document.getElementById('hostadd')
+    function showError(input, message){
+        const formControl = input.parentElement;
+        formControl.className='form-control error';
+        const small=formControl.querySelector('small');
+        small.innerText= message;
+    }
+    function showSuccess(input){
+        formControl = input.parentElement;
+        formControl.className='form-control success';
+        }
+    form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if (username.value === ''){
+    showError(username, 'user name requried')
+    }else{
+    showSuccess(username)
+    }
+
+    if (hostname.value === ''){
+    showError(hostname, 'Host name requried')
+    }else{
+    showSuccess(hostname)
+    }
+
+    });
+
+
+</script>
+</html>
