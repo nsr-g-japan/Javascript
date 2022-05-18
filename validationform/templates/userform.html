@@ -6,63 +6,59 @@
 </head>
 
 <style>
-  .form-control.success input{
+  .form-valid.success input{
     border-color: green
   }
-   .form-control.error input{
+   .form-valid.error input{
     border-color: red
   }
-   .form-control small{
+   .form-valid small{
     color: red
     position: absolute;
     visibility: hidden;
   }
-  .form-control.error small{
+  .form-valid.error small{
     visibility: visible;
   }
   .botton{
   background-color: #3498db
   }
 </style>
+<body>
 
-<div class="container">
 
+<form method="post" id="form" name = "myForm" onsubmit="return validateInputs()" >
+    {% csrf_token %}
+    <div class="form-valid">
+    Host Address:&emsp; &emsp; <input type="text" id="hostname" name="hostadd" placeholder="Enter Host Address" >
+    <small>Error message</small>
+    </div>
+   <div class="form-valid">
+    User Name :&emsp; &emsp; &nbsp;&nbsp; <input type="text"  id="username" name="username" placeholder="Enter User Name" >
+    <small>Error message</small>
+    </div>
 
-<form id="form">
-    <div class="form-control">
-   User Name: <input type="text" id="username" placeholder="Enter the Name"><br>
-        <small>Error message</small>
-</div>
-    <div class="form-control">
-   Host Name <input type="text" id="hostadd"  placeholder="Enter the Host"><br>
-               <small>Error message</small>
-</div>
-    <input type="submit" class="botton">
-
+    <button type="submit" class="bottonc2" >Add Data</button><br><br>
 
 </form>
-</div>
 <script>
+
     const form=document.getElementById('form')
+    const hostname=document.getElementById('hostname')
     const username=document.getElementById('username')
-    const hostname=document.getElementById('hostadd')
-    function showError(input, message){
-        const formControl = input.parentElement;
-        formControl.className='form-control error';
-        const small=formControl.querySelector('small');
+
+    function showError (input, message) {
+        const formValid = input.parentElement;
+        formValid.className='form-valid error';
+        const small=formValid.querySelector('small');
         small.innerText= message;
     }
     function showSuccess(input){
-        formControl = input.parentElement;
-        formControl.className='form-control success';
+        formValid = input.parentElement;
+        formValid.className='form-valid success';
         }
-    form.addEventListener('submit', function(e){
-    e.preventDefault();
-    if (username.value === ''){
-    showError(username, 'user name requried')
-    }else{
-    showSuccess(username)
-    }
+
+    function validateInputs(){
 
     if (hostname.value === ''){
     showError(hostname, 'Host name requried')
@@ -70,8 +66,22 @@
     showSuccess(hostname)
     }
 
-    });
+    if (username.value === ''){
+    showError(username, 'user name requried')
+    }else{
+    showSuccess(username)
+    }
+    if (dbdrop.value !== '' && hostname.value !== '') {
+            return true;
+        }
+
+
+
+  return false; };
+
+
 
 
 </script>
+</body>
 </html>
