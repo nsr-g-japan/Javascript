@@ -73,13 +73,21 @@ WSGI_APPLICATION = 'clientvalidation.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': 'dwproject',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': 'Nisarbasha',
+        'PORT': '',
+
+        'OPTIONS': {
+            'driver': 'ODBC Driver 13 for SQL Server',
+        },
+    },
 }
+DATABASE_CONNECTION_POOLING = False
 
 
 # Password validation
