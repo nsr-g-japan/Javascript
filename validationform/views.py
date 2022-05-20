@@ -31,6 +31,7 @@ def validateno(request):
 def serverisexists(request):
     if request.method == 'POST':
         sname = request.POST.get('server_name')
+        print("Hellp")
 
         rec = ("""select username from demo where username='{}' """.format(sname))
         record = cursor.execute(rec).fetchone()
