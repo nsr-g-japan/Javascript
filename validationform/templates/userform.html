@@ -27,45 +27,35 @@
 function checkname()
 {
     var error =false;
-
     var server_name = document.getElementById('server_name').value.trim();
-
     if(server_name != ""){
         $.ajax({
             type: 'post',
             url: 'serverisexists',
             data: {server_name:server_name, csrfmiddlewaretoken: '{{ csrf_token }}' },
+            async: false,
             success: function (msg) {
               if(msg=="OK"){
                 console.log('done');
                 $("#server_name").css("border","green Solid 3px");
                 $("#server_name_err").html("");
-
-              }else {
-
+              }else{
                     $("#server_name").css("border","red Solid 3px");
                     $("#server_name_err").html("Server name is exists");
                     error = true;
-                    console.log('error in ajax now');
-
+                    console.log(error);
                     }
             }
         });
-
     }
-    if (error == true){
-
+    if(error == true){
         return false;
         }
-    else{
-      return true;
-      }
+        else{
+        return true;
+        }
 
 }
-
-
-
-
 </script>
 </body>
 </html>
