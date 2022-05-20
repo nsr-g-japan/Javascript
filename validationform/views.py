@@ -1,4 +1,6 @@
 import pyodbc as pyodbc
+from django.http import HttpResponse
+from django.views.decorators.csrf import requires_csrf_token
 from django.shortcuts import render
 db = pyodbc.connect('Driver={SQL server};' 'server=Nisarbasha;' 'Database=dwproject;' 'Trusted_connection=yes;')
 cursor = db.cursor()
@@ -6,12 +8,54 @@ cursor = db.cursor()
 def userform(request):
     if request.method =='POST':
         hostid = request.POST.get('hostadd')
-        username = request.POST.get('username')
-        print(hostid,username)
+        username = request.POST.get('servername')
         sql = ("""insert into demo values('{}','{}')"""
                .format(hostid, username))
         cursor.execute(sql)
         cursor.commit()
 
 
+
+
     return render(request, 'userform.html',{})
+
+
+def validateno(request):
+    if request.method =='POST':
+        hostid = request.POST.get('hostadd')
+
+
+    return render(request, 'validate.html',{})
+
+
+def serverisexists(request):
+    if request.method == 'POST':
+        sname = request.POST.get('server_name')
+
+        rec = ("""select username from demo where username='{}' """.format(sname))
+        record = cursor.execute(rec).fetchone()
+        print(record)
+        if record is None:
+            print("If working now")
+            return HttpResponse('OK')
+        else:
+            print('else working now')
+            return HttpResponse("user already Exists")
+
+
+
+
+def userisexists(request):
+    if request.method == 'POST':
+        uname = request.POST.get('user_name')
+        print(uname)
+        rec = ("""select username from demo where username='{}' """.format(uname))
+        record = cursor.execute(rec).fetchone()
+        print(record)
+        if record is None:
+            print(record)
+            return HttpResponse('OK')
+        else:
+            print('else working')
+            return HttpResponse( "user already Exists")
+

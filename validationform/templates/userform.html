@@ -5,79 +5,63 @@
     <title>Title</title>
 </head>
 
-<style>
-  .form-valid.success input{
-    border-color: green
-  }
-   .form-valid.error input{
-    border-color: red
-  }
-   .form-valid small{
-    color: red
-    position: absolute;
-    visibility: hidden;
-  }
-  .form-valid.error small{
-    visibility: visible;
-  }
-  .botton{
-  background-color: #3498db
-  }
-</style>
 <body>
 
-
-<form method="post" id="form" name = "myForm" onsubmit="return validateInputs()" >
+<form method="post" id="form" name = "myForm" onsubmit="return checkname()" >
     {% csrf_token %}
-    <div class="form-valid">
-    Host Address:&emsp; &emsp; <input type="text" id="hostname" name="hostadd" placeholder="Enter Host Address" >
-    <small>Error message</small>
+    <div>
+    Host Address:&emsp; &emsp; <input type="text" id="host_name" name="hostadd" placeholder="Enter Host Address" >
+
     </div>
-   <div class="form-valid">
-    User Name :&emsp; &emsp; &nbsp;&nbsp; <input type="text"  id="username" name="username" placeholder="Enter User Name" >
-    <small>Error message</small>
-    </div>
+   <div>
+            Server Name:&emsp; &emsp;&nbsp; <input type="text" id="server_name" name="servername" placeholder="Enter Server Name" >
+            <span class="err_msg" id="server_name_err"></span>
+    </div><br>
 
     <button type="submit" class="bottonc2" >Add Data</button><br><br>
 
 </form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script>
 
-    const form=document.getElementById('form')
-    const hostname=document.getElementById('hostname')
-    const username=document.getElementById('username')
+function checkname()
+{
+    var error =false;
 
-    function showError (input, message) {
-        const formValid = input.parentElement;
-        formValid.className='form-valid error';
-        const small=formValid.querySelector('small');
-        small.innerText= message;
+    var server_name = document.getElementById('server_name').value.trim();
+
+    if(server_name != ""){
+        $.ajax({
+            type: 'post',
+            url: 'serverisexists',
+            data: {server_name:server_name, csrfmiddlewaretoken: '{{ csrf_token }}' },
+            success: function (msg) {
+              if(msg=="OK"){
+                console.log('done');
+                $("#server_name").css("border","green Solid 3px");
+                $("#server_name_err").html("");
+
+              }else {
+
+                    $("#server_name").css("border","red Solid 3px");
+                    $("#server_name_err").html("Server name is exists");
+                    error = true;
+                    console.log('error in ajax now');
+
+                    }
+            }
+        });
+
     }
-    function showSuccess(input){
-        formValid = input.parentElement;
-        formValid.className='form-valid success';
+    if (error == true){
+
+        return false;
         }
+    else{
+      return true;
+      }
 
-    function validateInputs(){
-
-    if (hostname.value === ''){
-    showError(hostname, 'Host name requried')
-    }else{
-    showSuccess(hostname)
-    }
-
-    if (username.value === ''){
-    showError(username, 'user name requried')
-    }else{
-    showSuccess(username)
-    }
-    if (dbdrop.value !== '' && hostname.value !== '') {
-            return true;
-        }
-
-
-
-  return false; };
+}
 
 
 
