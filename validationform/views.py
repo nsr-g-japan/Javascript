@@ -8,7 +8,7 @@ server = 'gjndev.database.windows.net'
 database = 'testing_excel_db'
 username = 'gindev'
 password = 'admin@123'
-db = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
+db = pyodbc.connect('DRIVER={SQL server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
 cursor = db.cursor()
 
 
