@@ -2,7 +2,7 @@ import pyodbc as pyodbc
 from django.http import HttpResponse
 from django.views.decorators.csrf import requires_csrf_token
 from django.shortcuts import render
-
+from django.views.decorators.csrf import csrf_exempt
 
 server = 'gjndev.database.windows.net'
 database = 'testing_excel_db'
@@ -14,6 +14,7 @@ cursor = db.cursor()
 
 
 # Create your views here.
+@csrf_exempt
 def userform(request):
     if request.method =='POST':
         hostid = request.POST.get('hostadd')
