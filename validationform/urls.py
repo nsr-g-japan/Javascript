@@ -3,6 +3,5 @@ from .views import *
 urlpatterns = [
 
     path('userform',userform),
-    path('validateno', validateno),
     path('serverisexists',serverisexists, name='serverisexists')
 ]

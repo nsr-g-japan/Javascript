@@ -30,14 +30,6 @@ def userform(request):
     return render(request, 'userform.html',{})
 
 
-def validateno(request):
-    if request.method =='POST':
-        hostid = request.POST.get('hostadd')
-
-
-    return render(request, 'validate.html',{})
-
-
 def serverisexists(request):
     if request.method == 'POST':
         sname = request.POST.get('server_name')
