@@ -43,7 +43,7 @@ def serverisexists(request):
         sname = request.POST.get('server_name')
         print("Hellp")
 
-        rec = ("""select username from demo where username='{}' """.format(sname))
+        rec = ("""select servername from demo where servername='{}' """.format(sname))
         record = cursor.execute(rec).fetchone()
         print(record)
         if record is None:
