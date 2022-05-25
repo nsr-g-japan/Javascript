@@ -23,10 +23,6 @@ def userform(request):
                .format(hostid, username))
         cursor.execute(sql)
         cursor.commit()
-        print("hello")
-
-
-
 
     return render(request, 'userform.html',{})
 
