@@ -2,8 +2,17 @@ import pyodbc as pyodbc
 from django.http import HttpResponse
 from django.views.decorators.csrf import requires_csrf_token
 from django.shortcuts import render
-db = pyodbc.connect('Driver={SQL server};' 'server=Nisarbasha;' 'Database=dwproject;' 'Trusted_connection=yes;')
+
+
+server = 'gjndev.database.windows.net'
+database = 'testing_excel_db'
+username = 'gindev'
+password = 'admin@123'
+db = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
 cursor = db.cursor()
+
+
+
 # Create your views here.
 def userform(request):
     if request.method =='POST':
