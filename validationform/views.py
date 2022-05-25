@@ -14,7 +14,7 @@ cursor = db.cursor()
 
 
 # Create your views here.
-@csrf_exempt
+
 def userform(request):
     if request.method =='POST':
         hostid = request.POST.get('hostadd')
